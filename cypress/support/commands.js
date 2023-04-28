@@ -23,3 +23,32 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+//Headless authentication
+Cypress.Commands.add('loginToAppGetToken', () => {
+
+    /*const userCredentials = {
+        "user": {
+            "email": "artem.bondar16@gmail.com",
+            "password": "CypressTest1"
+        }
+    }*/
+    //declaradas como variables globales en cypress.config.js
+    const userCredentials = {
+        "user": {
+            "email": Cypress.env("username"),
+            "password": Cypress.env("password")
+        }
+    }
+                        //can use env to get the baseURL
+    cy.request('POST', Cypress.env("")+'/api/users/login', userCredentials)
+    .its('body').then(body => {
+        const token = body.user.token
+        cy.wrap(token).as('token')
+        cy.visit('/', {
+            onBeoreLoad (win){
+                win.localStorage.setItem('jwtToken', token)
+            }
+        })
+    })
+})
