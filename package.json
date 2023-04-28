@@ -1,0 +1,22 @@
+{
+  "name": "api-testing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lesson1.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JossZC/API-testing.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JossZC/API-testing/issues"
+  },
+  "homepage": "https://github.com/JossZC/API-testing#readme",
+  "devDependencies": {
+    "cypress": "^12.11.0"
+  }
+}
