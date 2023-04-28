@@ -14,6 +14,10 @@ module.exports = defineConfig({
       username: "artem.bondar16@gmail.com",
       password: "CypressTest1",
       apiURL: "https://simple-grocery-store-api.glitch.me/"
+    },
+    retries: {
+      runMode: 1, //CI or CD
+      openMode: 1 //cypress open
     }
   },
 });
