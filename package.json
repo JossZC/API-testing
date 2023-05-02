@@ -4,7 +4,11 @@
   "description": "",
   "main": "lesson1.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cy:run": "npx cypress run --headless --record --key ba470c2d-2d6a-463e-9ce8-3e75789b5579 --parallel",
+    "cy:run_parallel": "npm run cy:run & npm run cy:run",
+    "cy:run_spec": "npx cypress run --spec 'cypress/e2e/Classes/APIs.cy.js' --record --key ba470c2d-2d6a-463e-9ce8-3e75789b5579",
+    "cy:run_browser": "npm run cy:run_spec -- --browser electron --group electron --ci-build-id 1 & npm run cy:run_spec -- --browser chrome --group Chrome --ci-build-id 1"
   },
   "repository": {
     "type": "git",
@@ -18,5 +22,8 @@
   "homepage": "https://github.com/JossZC/API-testing#readme",
   "devDependencies": {
     "cypress": "^12.11.0"
+  },
+  "dependencies": {
+    "cypress-plugin-snapshots": "^1.4.4"
   }
 }
