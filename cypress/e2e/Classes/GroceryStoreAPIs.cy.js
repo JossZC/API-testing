@@ -74,9 +74,6 @@ describe('Grocery Store', () => {
             method: 'DELETE'
         }).then( response => {
             expect(response.status).to.eq(204)
-            //expect(response.body).to.be.an('object');
-            //expect(response.body.created).to.be.true;
-            //expect(response.body.itemId).to.be.an('number');
         })
     })
 })
