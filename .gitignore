@@ -2,3 +2,7 @@
 
 # System Files
 cypress.env.json
+.DS_Store
+cypress/screenshots/
+cypress/videos/
+temp/

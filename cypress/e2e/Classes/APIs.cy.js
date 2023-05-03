@@ -52,7 +52,7 @@ describe('APIs in Cypress', () => {
         //https://docs.cypress.io/api/commands/intercept#docusaurus_skipToContent_fallback
     })
 
-    it.only('API Calls Using Cypress', () => {
+    it('API Calls Using Cypress', () => {
         //Ejemplos curso
         /*const userCredentials = {
             "user": {
@@ -98,7 +98,7 @@ describe('APIs in Cypress', () => {
         })
     })
 
-    it('Headless Authorization', () => {
+    /*it('Headless Authorization', () => {
         // Previus test
         const userCredentials = {
             "user": {
@@ -132,9 +132,20 @@ describe('APIs in Cypress', () => {
                 expect(body.article[0].title).not.to.equal('Request from API')
             })
         ])
-    })
+    })*/
 
-    it('Environment Variables', () => {
-        //
+    it.only('API requests to Grocery Store', () => {
+        cy.request('https://simple-grocery-store-api.glitch.me/status').then((response) => {
+            expect(response.status).to.eq(200)
+            expect(response.body.status).to.be.eq('UP')
+        })
+        cy.request('https://simple-grocery-store-api.glitch.me/products').then((response) => {
+            expect(response.status).to.eq(200)
+            expect(response.body).to.have.length.above(0)
+            console.log(response.body[0])
+            expect(response.body[0]).to.have.property('id')
+            expect(response.body[0]).to.have.property('inStock')
+            expect(response.body[0].inStock).to.be.true
+        })
     })
 })
