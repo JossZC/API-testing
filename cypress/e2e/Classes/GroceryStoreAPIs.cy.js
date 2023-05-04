@@ -3,6 +3,8 @@ describe('Grocery Store', () => {
     let productID = 4643
     let cardID = "tzt2DGNiP8I7NTttu2SMf"
     let itemID = 755732223
+    let orderID;
+    let token = "dfbac8acdab857a026d775a498f9134e6b4baa2086f4c7b056bee3d7eeb46002"
 
     it('Check status', () => {
         cy.request(Cypress.env("apiURL")+'status').then((response) => {
@@ -32,7 +34,7 @@ describe('Grocery Store', () => {
         })
     })
 
-    it.skip('Create a new cart', () => {
+    it('Create a new cart', () => {
         cy.request({
             url: `${Cypress.env("apiURL")}carts`,
             method: 'POST'
@@ -58,13 +60,49 @@ describe('Grocery Store', () => {
         })
     })
 
-    it('Add item to cart', () => { 
+    it.only('Add item to cart', () => { 
         cy.request('POST',Cypress.env("apiURL")+'carts/'+cardID+'/items', { "productId": productID}).then((response) => {
             expect(response.status).to.eq(200)
             expect(response.body).to.be.an('object');
             expect(response.body.created).to.be.true;
             expect(response.body.itemId).to.be.an('number');
             itemID = response.body.itemId
+        })
+    })
+    //Create API Cliente
+    it('Register API Client', () => { 
+        cy.request({
+            url: `${Cypress.env("apiURL")}api-clients`,
+            method: 'POST',
+            body: {
+                "clientName": Cypress.env("username"),
+                "clientEmail": Cypress.env("clientEmail")
+            }
+        }).then( response => {
+            expect(response.status).to.eq(201)
+            expect(response.body).to.be.an('object')
+            expect(response.body.accessToken).to.be.an('string')
+            cy.log(response.body.accessToken)
+            token = response.body.accessToken
+        })
+    })
+
+    it.only('Create an order', () => { 
+        cy.request({
+            url: `${Cypress.env("apiURL")}orders`,
+            headers: {'Autorization': 'Bearer '+token},
+            method: 'POST',
+            body: {
+                "cartId": cardID,
+                "customerName": Cypress.env("username")
+            }
+        }).then( response => {
+            expect(response.status).to.eq(201)
+            expect(response.body).to.be.an('object')
+            expect(response.body.created).to.be.true
+            expect(response.body.orderId).to.be.an('string')
+            cy.log(response.body.orderId)
+            orderID = response.body.orderId
         })
     })
 
