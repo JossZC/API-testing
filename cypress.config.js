@@ -16,7 +16,7 @@ module.exports = defineConfig({
     ],
     "viewportHeight": 1080,
     "viewportWidth": 1920,
-    "video": true,
+    "video": false,
     retries: {
       runMode: 1, //CI or CD
       openMode: 1 //cypress open
